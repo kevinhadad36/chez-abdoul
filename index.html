@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chez Abdoul — Primeur, fruits &amp; légumes, produits exotiques · Toulouse</title>
+<meta name="description" content="Chez Abdoul, primeur et alimentation générale au 102 rue du Férétra à Toulouse : fruits et légumes frais, produits exotiques, épicerie, pain chaud. Ouvert 7j/7. Noté 4,7/5 sur Google.">
+<meta property="og:title" content="Chez Abdoul — Primeur à Toulouse">
+<meta property="og:description" content="Fruits et légumes frais, produits exotiques, épicerie. 102 rue du Férétra, ouvert 7j/7.">
+<meta property="og:image" content="images/photo-1.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#100904">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "GroceryStore",
+  "name": "Fruits & Légumes Chez Abdoul",
+  "image": "images/photo-1.jpg",
+  "telephone": "+33751360512",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "102 rue du Férétra",
+    "postalCode": "31400",
+    "addressLocality": "Toulouse",
+    "addressCountry": "FR"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 43.5821763, "longitude": 1.4442305 },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "09:00", "closes": "20:30" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "09:00", "closes": "19:30" }
+  ],
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.7", "reviewCount": "44" }
+}
+</script>
+<style>
+  :root{
+    --void:#100904;
+    --bark:#2a1a0f;
+    --cream:#ffedd7;
+    --cream-soft:#cdb9a2;
+    --cork:#40372e;
+    --drift:#6c5f51;
+    --leaf:#4cb944;      /* vert de l'enseigne */
+    --brick:#c0603a;     /* brique toulousaine de la façade */
+    --font:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--void);color:var(--cream);font-family:var(--font);font-weight:400;line-height:1.4;overflow-x:hidden}
+  img{display:block;max-width:100%}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--leaf);outline-offset:3px}
+  .up{text-transform:uppercase;font-weight:500;letter-spacing:.02em}
+  .dash{border:0;border-top:1px dashed var(--cork)}
+
+  /* NAV */
+  .nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:18px 24px;font-size:13px}
+  .nav.scrolled{background:rgba(16,9,4,.92);backdrop-filter:blur(8px);border-bottom:1px dashed var(--cork)}
+  .nav .brand{text-decoration:none;display:flex;align-items:center;gap:10px}
+  .nav .brand i{width:9px;height:9px;border-radius:50%;background:var(--leaf);display:block}
+  .nav ul{list-style:none;display:flex;gap:24px;align-items:center}
+  .nav ul a{text-decoration:none;padding:6px 0;border-bottom:1px dashed transparent}
+  .nav ul a:hover{border-bottom-color:var(--drift)}
+  .nav .call{border:1px solid var(--cream);border-radius:22.5px;padding:8px 16px}
+  @media (max-width:720px){ .nav ul li:not(:last-child){display:none} }
+
+  /* HERO */
+  .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:96px 24px 24px;overflow:hidden}
+  .hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%;filter:saturate(1.05) contrast(1.05)}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,9,4,.55) 0%,rgba(16,9,4,.15) 35%,rgba(16,9,4,.7) 70%,var(--void) 100%)}
+  .hero > *:not(img){position:relative;z-index:2}
+  .hero h1{font-size:clamp(56px,13vw,180px);line-height:.86;font-weight:500;text-transform:uppercase;letter-spacing:-.01em;margin-bottom:28px}
+  .hero h1 span{display:block;font-size:.26em;letter-spacing:.06em;line-height:1.2;color:var(--cream-soft);margin-bottom:12px}
+  .side{position:absolute;right:20px;top:50%;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;font-size:11px;color:var(--cream-soft);z-index:2}
+  .hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap}
+  .card{background:rgba(42,26,15,.78);backdrop-filter:blur(6px);border:1px solid var(--cork);border-radius:12px;padding:24px;display:grid;gap:12px;max-width:420px;width:100%}
+  .card .row{display:flex;justify-content:space-between;gap:16px;font-size:13px}
+  .card .row b{font-weight:500;color:var(--cream-soft)}
+  .open{display:inline-flex;align-items:center;gap:8px;font-size:12px}
+  .open i{width:8px;height:8px;border-radius:50%;background:var(--leaf);box-shadow:0 0 0 4px rgba(76,185,68,.2)}
+  .open.closed i{background:var(--brick);box-shadow:0 0 0 4px rgba(192,96,58,.2)}
+  .ctas{display:flex;gap:12px;flex-wrap:wrap}
+  .pill{display:inline-flex;align-items:center;gap:10px;background:var(--leaf);color:#0c1a08;border-radius:36px;padding:15px 26px;font-size:13px;text-decoration:none;font-weight:600;text-transform:uppercase;letter-spacing:.03em;min-height:48px}
+  .ghost{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--cream);border-radius:36px;padding:15px 24px;font-size:13px;text-decoration:none;text-transform:uppercase;font-weight:500;min-height:48px}
+  .pill:hover{filter:brightness(1.08)} .ghost:hover{background:rgba(255,237,215,.08)}
+
+  /* SECTIONS */
+  section{padding:clamp(72px,12vw,160px) 24px}
+  .label{font-size:12px;color:var(--cream-soft);display:flex;gap:12px;align-items:center;margin-bottom:31px}
+  .label::before{content:"";width:24px;border-top:1px dashed var(--drift)}
+  .statement{font-size:clamp(24px,3.6vw,44px);line-height:1.22;max-width:30ch;font-weight:400}
+  .statement em{font-style:normal;color:var(--leaf)}
+
+  /* RAYONS */
+  .rayons{display:grid;grid-template-columns:1fr minmax(0,1.1fr) 1fr;gap:18px;align-items:center}
+  .rayons h2{font-size:clamp(34px,4.4vw,56px);line-height:.92;font-weight:500;text-transform:uppercase}
+  .rayons .photo{border-radius:12px;overflow:hidden;aspect-ratio:4/5}
+  .rayons .photo img{width:100%;height:100%;object-fit:cover}
+  .list{list-style:none;display:grid}
+  .list li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:18px 0;border-top:1px dashed var(--cork)}
+  .list li:last-child{border-bottom:1px dashed var(--cork)}
+  .list .n{font-size:12px;color:var(--drift);padding-top:3px}
+  .list b{display:block;font-weight:500;text-transform:uppercase;font-size:15px;margin-bottom:4px}
+  .list span{color:var(--cream-soft);font-size:15px}
+  @media (max-width:900px){ .rayons{grid-template-columns:1fr} .rayons .photo{aspect-ratio:4/3} }
+
+  /* GALERIE */
+  .gallery{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+  .gallery figure{border-radius:12px;overflow:hidden;position:relative;background:var(--bark);aspect-ratio:4/5}
+  .gallery figure:first-child{aspect-ratio:auto}
+  .gallery img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+  .gallery figure:hover img{transform:scale(1.03)}
+  .gallery figcaption{position:absolute;left:12px;bottom:12px;font-size:11px;text-transform:uppercase;font-weight:500;background:rgba(16,9,4,.75);padding:6px 10px;border-radius:22.5px}
+  @media (max-width:720px){ .gallery{grid-template-columns:1fr} .gallery figure:first-child{grid-row:auto} .gallery figure{aspect-ratio:4/3} }
+
+  /* AVIS */
+  .avis{display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,6vw,96px);align-items:end}
+  .score{font-size:clamp(96px,18vw,220px);line-height:.85;font-weight:500;letter-spacing:-.03em}
+  .score small{font-size:.22em;color:var(--cream-soft);letter-spacing:0}
+  .stars{display:flex;gap:6px;margin:18px 0 8px}
+  .stars svg{width:22px;height:22px}
+  .quotes{display:grid;gap:18px}
+  .quotes p{font-size:clamp(20px,2.4vw,29px);line-height:1.26}
+  @media (max-width:720px){ .avis{grid-template-columns:1fr} }
+
+  /* COMMANDE */
+  .order{background:var(--bark);border-radius:12px;padding:clamp(32px,6vw,68px);display:grid;grid-template-columns:1.3fr 1fr;gap:41px;align-items:center;margin:0 24px}
+  .order h2{font-size:clamp(34px,5vw,64px);line-height:.92;font-weight:500;text-transform:uppercase}
+  .order p{color:var(--cream-soft);font-size:17px;margin-top:18px;max-width:46ch}
+  .steps{list-style:none;display:grid;gap:12px;counter-reset:s}
+  .steps li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;font-size:15px}
+  .steps li::before{content:counter(s);width:28px;height:28px;border-radius:50%;border:1px solid var(--leaf);color:var(--leaf);display:grid;place-items:center;font-size:12px;font-weight:600}
+  @media (max-width:820px){ .order{grid-template-columns:1fr;margin:0 16px} }
+
+  /* INFOS */
+  .infos{display:grid;grid-template-columns:1fr 1fr;gap:41px}
+  .hours{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
+  .hours td{padding:14px 0;border-top:1px dashed var(--cork)}
+  .hours tr:last-child td{border-bottom:1px dashed var(--cork)}
+  .hours td:last-child{text-align:right;color:var(--cream-soft)}
+  .hours tr.today td{color:var(--leaf)}
+  .addr{font-size:clamp(24px,3vw,36px);line-height:1.15;font-weight:500;text-transform:uppercase;margin-bottom:24px}
+  .map{border-radius:12px;overflow:hidden;border:1px solid var(--cork);aspect-ratio:4/3;margin-top:24px;background:var(--bark)}
+  .map iframe{width:100%;height:100%;border:0;filter:grayscale(.4) invert(.9) hue-rotate(180deg) contrast(.9)}
+  .extra{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .tag{font-size:11px;text-transform:uppercase;font-weight:500;border:1px solid var(--cork);border-radius:22.5px;padding:7px 12px;color:var(--cream-soft)}
+  @media (max-width:820px){ .infos{grid-template-columns:1fr} }
+
+  footer{padding:41px 24px 96px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;font-size:12px;color:var(--drift);border-top:1px dashed var(--cork);margin-top:96px}
+
+  /* barre d'action mobile */
+  .mbar{position:fixed;left:12px;right:12px;bottom:12px;z-index:60;display:none;gap:8px}
+  .mbar a{flex:1;justify-content:center}
+  @media (max-width:720px){ .mbar{display:flex} }
+
+  .reveal{opacity:1;transform:none;transition:opacity .9s ease,transform .9s ease}
+  .js .reveal.pending{opacity:.001;transform:translateY(24px)}
+  @media (prefers-reduced-motion:reduce){ .reveal,.js .reveal.pending{opacity:1;transform:none;transition:none} .gallery img{transition:none} }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav" aria-label="Navigation principale">
+  <a href="#top" class="brand up"><i aria-hidden="true"></i>Chez Abdoul</a>
+  <ul class="up">
+    <li><a href="#rayons">Rayons</a></li>
+    <li><a href="#avis">Avis</a></li>
+    <li><a href="#infos">Horaires</a></li>
+    <li><a class="call" href="tel:+33751360512">07 51 36 05 12</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <img class="bg" src="images/photo-1.jpg" alt="Façade du magasin Chez Abdoul, enseigne verte Alimentation générale Fruits et Légumes, rue du Férétra à Toulouse" fetchpriority="high">
+  <p class="side up">Primeur · Toulouse · Rue du Férétra</p>
+  <h1><span>Fruits · Légumes · Produits exotiques</span>Chez<br>Abdoul</h1>
+  <div class="hero-row">
+    <div class="card">
+      <span class="open up" id="openState"><i></i><span>Ouvert 7j/7</span></span>
+      <hr class="dash">
+      <div class="row"><b class="up">Adresse</b><span>102 rue du Férétra, Toulouse</span></div>
+      <div class="row"><b class="up">Horaires</b><span>9h – 20h30 · dim. 19h30</span></div>
+      <div class="row"><b class="up">Google</b><span>★ 4,7 / 5 · 44 avis</span></div>
+    </div>
+    <div class="ctas">
+      <a class="pill" href="tel:+33751360512">Appeler le magasin</a>
+      <a class="ghost" href="https://www.google.com/maps/dir/?api=1&destination=Fruits+%26+L%C3%A9gumes+Chez+Abdoul+102+rue+du+F%C3%A9r%C3%A9tra+31400+Toulouse" target="_blank" rel="noopener">Itinéraire</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <p class="label up">Le magasin</p>
+    <p class="statement reveal">Le primeur du quartier Saint-Agne – Empalot. Des fruits et légumes <em>frais chaque jour</em>, les produits exotiques qu'on ne trouve pas ailleurs, et l'épicerie du quotidien. Ouvert tous les jours, même le dimanche.</p>
+  </section>
+
+  <section id="rayons">
+    <p class="label up">Les rayons</p>
+    <div class="rayons">
+      <h2 class="reveal">Tout pour<br>la cuisine<br>de chez soi</h2>
+      <figure class="photo reveal"><img src="images/photo-6.jpg" alt="Étals de fruits et légumes frais à l'intérieur du magasin : poivrons, tomates, oranges, bananes" loading="lazy"></figure>
+      <ul class="list">
+        <li><span class="n">01</span><div><b>Fruits &amp; légumes</b><span>Arrivages frais, prix affichés au kilo.</span></div></li>
+        <li><span class="n">02</span><div><b>Produits exotiques</b><span>Fruits tropicaux, tubercules, piments, spécialités africaines.</span></div></li>
+        <li><span class="n">03</span><div><b>Épicerie &amp; épices</b><span>Épices, conserves, olives au détail, œufs.</span></div></li>
+        <li><span class="n">04</span><div><b>Pain chaud</b><span>Pain et viennoiseries chaque matin.</span></div></li>
+        <li><span class="n">05</span><div><b>Boissons fraîches</b><span>Eaux, jus et sodas au frais.</span></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="gallery">
+      <figure class="reveal"><img src="images/photo-7.jpg" alt="Intérieur lumineux du magasin : vitrines réfrigérées et présentoir d'épices" loading="lazy"><figcaption>L'intérieur</figcaption></figure>
+      <figure class="reveal"><img src="images/photo-5.jpg" alt="Olives vendues au détail, œufs et épicerie sur les étagères" loading="lazy"><figcaption>Olives au détail</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="avis">
+    <p class="label up">Avis Google</p>
+    <div class="avis">
+      <div class="reveal">
+        <p class="score">4,7<small> /5</small></p>
+        <div class="stars" aria-label="4,7 étoiles sur 5">
+          <svg viewBox="0 0 24 24" fill="#4cb944" aria-hidden="true"><path d="M12 2l3 6.9 7.5.7-5.7 5 1.7 7.4L12 18.3 5.5 22l1.7-7.4-5.7-5 7.5-.7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#4cb944" aria-hidden="true"><path d="M12 2l3 6.9 7.5.7-5.7 5 1.7 7.4L12 18.3 5.5 22l1.7-7.4-5.7-5 7.5-.7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#4cb944" aria-hidden="true"><path d="M12 2l3 6.9 7.5.7-5.7 5 1.7 7.4L12 18.3 5.5 22l1.7-7.4-5.7-5 7.5-.7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#4cb944" aria-hidden="true"><path d="M12 2l3 6.9 7.5.7-5.7 5 1.7 7.4L12 18.3 5.5 22l1.7-7.4-5.7-5 7.5-.7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#40372e" aria-hidden="true"><path d="M12 2l3 6.9 7.5.7-5.7 5 1.7 7.4L12 18.3 5.5 22l1.7-7.4-5.7-5 7.5-.7z"/></svg>
+        </div>
+        <p class="up" style="font-size:12px;color:var(--cream-soft)">44 avis clients</p>
+      </div>
+      <div class="quotes reveal">
+        <p>Ce que les clients reviennent dire : des fruits et légumes très frais, un bon rapport qualité-prix et un magasin tenu impeccablement.</p>
+        <a class="ghost" style="justify-self:start" href="https://www.google.com/maps/place/Fruits+%26+L%C3%A9gumes+Chez+Abdoul/@43.5821763,1.4442305,17z" target="_blank" rel="noopener">Lire les avis sur Google</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="order reveal" id="commander">
+    <div>
+      <p class="label up">Commander</p>
+      <h2>Préparez votre<br>panier, passez<br>le récupérer</h2>
+      <p>Envoyez votre liste par WhatsApp : on la prépare, vous passez la chercher en magasin. Pas d'attente, pas d'oubli.</p>
+    </div>
+    <div style="display:grid;gap:24px">
+      <ol class="steps">
+        <li>Envoyez votre liste et l'heure de passage</li>
+        <li>On confirme et on prépare votre commande</li>
+        <li>Vous récupérez et payez au magasin</li>
+      </ol>
+      <a class="pill" style="justify-self:start" href="https://wa.me/33751360512?text=Bonjour%20Chez%20Abdoul%2C%20je%20voudrais%20commander%20%3A%20" target="_blank" rel="noopener">Commander sur WhatsApp</a>
+    </div>
+  </div>
+
+  <section id="infos">
+    <p class="label up">Infos pratiques</p>
+    <div class="infos">
+      <div class="reveal">
+        <p class="addr">102 rue du Férétra<br>31400 Toulouse</p>
+        <table class="hours" aria-label="Horaires d'ouverture">
+          <tbody id="hours">
+            <tr data-d="1"><td>Lundi</td><td>9h00 – 20h30</td></tr>
+            <tr data-d="2"><td>Mardi</td><td>9h00 – 20h30</td></tr>
+            <tr data-d="3"><td>Mercredi</td><td>9h00 – 20h30</td></tr>
+            <tr data-d="4"><td>Jeudi</td><td>9h00 – 20h30</td></tr>
+            <tr data-d="5"><td>Vendredi</td><td>9h00 – 20h30</td></tr>
+            <tr data-d="6"><td>Samedi</td><td>9h00 – 20h30</td></tr>
+            <tr data-d="0"><td>Dimanche</td><td>9h00 – 19h30</td></tr>
+          </tbody>
+        </table>
+        <div class="extra">
+          <span class="tag">Carte bancaire &amp; sans contact</span>
+          <span class="tag">Accès PMR</span>
+          <span class="tag">Bus 34 · Récollets</span>
+          <span class="tag">Métro B · Saint-Agne</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="ctas">
+          <a class="pill" href="tel:+33751360512">07 51 36 05 12</a>
+          <a class="ghost" href="https://wa.me/33751360512" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+        <div class="map">
+          <iframe title="Plan d'accès Chez Abdoul" loading="lazy" src="https://www.google.com/maps?q=43.5821763,1.4442305&z=17&output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span class="up">© 2026 Fruits &amp; Légumes Chez Abdoul · Toulouse</span>
+  <span class="up">102 rue du Férétra · 07 51 36 05 12</span>
+</footer>
+
+<div class="mbar">
+  <a class="pill" href="tel:+33751360512">Appeler</a>
+  <a class="ghost" style="background:rgba(16,9,4,.9)" href="https://wa.me/33751360512?text=Bonjour%20Chez%20Abdoul%2C%20je%20voudrais%20commander%20%3A%20" target="_blank" rel="noopener">Commander</a>
+</div>
+
+<script>
+  document.documentElement.classList.add('js');
+  const nav=document.getElementById('nav');
+  const onScroll=()=>nav.classList.toggle('scrolled',scrollY>40);
+  onScroll(); addEventListener('scroll',onScroll,{passive:true});
+
+  // horaires : surligner le jour et afficher ouvert / fermé (heure de Paris)
+  const now=new Date(new Date().toLocaleString('en-US',{timeZone:'Europe/Paris'}));
+  const d=now.getDay(), m=now.getHours()*60+now.getMinutes();
+  const close=d===0?19*60+30:20*60+30;
+  const row=document.querySelector('#hours tr[data-d="'+d+'"]'); if(row) row.classList.add('today');
+  const st=document.getElementById('openState');
+  const isOpen=m>=540&&m<close;
+  st.querySelector('span').textContent=isOpen?'Ouvert · ferme à '+(d===0?'19h30':'20h30'):'Fermé · ouvre à 9h00';
+  if(!isOpen) st.classList.add('closed');
+
+  // apparition au scroll, à partir d'un état visible
+  if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const els=[...document.querySelectorAll('.reveal')].filter(e=>e.getBoundingClientRect().top>innerHeight);
+    els.forEach(e=>e.classList.add('pending'));
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.remove('pending');io.unobserve(e.target)}}),{rootMargin:'0px 0px -10% 0px'});
+    els.forEach(e=>io.observe(e));
+  }
+</script>
+</body>
+</html>
