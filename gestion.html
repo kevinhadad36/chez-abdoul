@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Gestion — Chez Abdoul</title>
+<meta name="theme-color" content="#4cb944">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fffbf3;--surface:#fff;--ink:#17301a;--ink-soft:#4f5f4c;--line:#e6dfcd;--muted:#8a917d;--leaf:#4cb944;--leaf-deep:#2f8a2c;--leaf-soft:#e7f6e3;--sun:#ffc531;--tomato:#e8452c;--font:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:400 15px/1.4 var(--font)}
+  button,input,select{font:inherit;color:inherit}
+  a{color:var(--leaf-deep)}
+  button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--leaf);outline-offset:2px}
+  .up{text-transform:uppercase;font-weight:600;letter-spacing:.03em}
+  header{position:sticky;top:0;z-index:10;background:var(--leaf);display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px}
+  header b{font-size:15px}
+  .tabs{display:flex;gap:6px}
+  .tabs button{border:0;background:rgba(255,255,255,.5);border-radius:36px;padding:10px 16px;cursor:pointer;font-weight:600;font-size:13px;min-height:44px}
+  .tabs button[aria-selected="true"]{background:var(--ink);color:#fff}
+  main{max-width:1000px;margin:0 auto;padding:20px 16px 80px;display:grid;gap:20px}
+  .btn{border:0;border-radius:36px;padding:0 18px;min-height:44px;cursor:pointer;font-weight:600;font-size:13px;text-transform:uppercase;background:var(--leaf);color:#0f2410}
+  .btn.light{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .btn.danger{background:#fff;border:1px solid var(--tomato);color:var(--tomato)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .login{max-width:380px;margin:12vh auto;display:grid;gap:14px}
+  .login h1{font-size:28px}
+  label{display:grid;gap:6px;font-size:12px;font-weight:600;text-transform:uppercase;color:var(--ink-soft)}
+  input,select{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;font-size:16px;min-height:44px;width:100%}
+  .msg{font-size:14px;padding:10px 12px;border-radius:10px;background:#fdecea;color:#8b1d0f}
+  .msg.ok{background:var(--leaf-soft);color:var(--leaf-deep)}
+  .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .bar h2{font-size:22px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chips button{border:1px solid var(--line);background:#fff;border-radius:36px;padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600;min-height:40px}
+  .chips button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .order{display:grid;gap:10px;border-left:6px solid var(--line)}
+  .order[data-s="nouvelle"]{border-left-color:var(--tomato)}
+  .order[data-s="en préparation"]{border-left-color:var(--sun)}
+  .order[data-s="prête"]{border-left-color:var(--leaf)}
+  .order .top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .order .ref{font-size:20px;font-weight:600;letter-spacing:.04em}
+  .pill{display:inline-block;border-radius:36px;padding:4px 10px;font-size:12px;font-weight:600;text-transform:uppercase;background:var(--leaf-soft)}
+  .order ul{list-style:none;display:grid;gap:4px;font-variant-numeric:tabular-nums}
+  .order ul li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--line);padding-bottom:4px}
+  .meta{color:var(--ink-soft);font-size:14px}
+  .acts{display:flex;gap:8px;flex-wrap:wrap}
+  .empty{color:var(--muted);text-align:center;padding:30px}
+  .prods{display:grid;gap:10px}
+  .prod{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:start}
+  .prod .ph{width:72px;height:72px;border-radius:12px;overflow:hidden;background:var(--sun);display:grid;place-items:center;font-size:11px;font-weight:600;text-align:center;cursor:pointer;position:relative}
+  .prod .ph img{width:100%;height:100%;object-fit:cover}
+  .prod .ph input{position:absolute;inset:0;opacity:0;cursor:pointer}
+  .prod .fields{display:grid;grid-template-columns:2fr 1.2fr 1fr 1fr;gap:8px}
+  .prod .fields label{font-size:10px}
+  .prod .row2{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+  .switch{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;text-transform:none;color:var(--ink);cursor:pointer}
+  .switch input{width:22px;height:22px;min-height:0;accent-color:var(--leaf-deep)}
+  .prod.off{opacity:.55}
+  @media (max-width:700px){ .prod .fields{grid-template-columns:1fr 1fr} header{flex-wrap:wrap} }
+  .toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:36px;font-size:14px;z-index:50}
+</style>
+</head>
+<body>
+
+<section class="login" id="loginView" hidden>
+  <h1>Gestion<br>Chez Abdoul</h1>
+  <form id="loginForm" class="card" style="display:grid;gap:12px">
+    <label>Email<input type="email" name="email" required autocomplete="username"></label>
+    <label>Mot de passe<input type="password" name="password" required autocomplete="current-password"></label>
+    <button class="btn" type="submit">Se connecter</button>
+    <p class="msg" id="loginMsg" hidden></p>
+  </form>
+  <a href="./">← Retour au site</a>
+</section>
+
+<div id="app" hidden>
+  <header>
+    <b class="up">Chez Abdoul · Gestion</b>
+    <nav class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="orders">Commandes <span id="newCount"></span></button>
+      <button role="tab" aria-selected="false" data-tab="products">Produits</button>
+      <button role="tab" aria-selected="false" id="logout">Quitter</button>
+    </nav>
+  </header>
+
+  <main id="ordersView">
+    <div class="bar">
+      <h2>Commandes</h2>
+      <div class="chips" id="orderFilter">
+        <button aria-pressed="true" data-f="active">À préparer</button>
+        <button aria-pressed="false" data-f="today">Aujourd'hui</button>
+        <button aria-pressed="false" data-f="all">Toutes</button>
+      </div>
+    </div>
+    <div id="orders" style="display:grid;gap:12px"></div>
+  </main>
+
+  <main id="productsView" hidden>
+    <div class="bar">
+      <h2>Produits</h2>
+      <button class="btn" id="addProd">+ Ajouter un produit</button>
+    </div>
+    <p class="meta">Les changements sont enregistrés dès que vous quittez un champ. Décochez « En vente » pour une rupture de stock. Touchez la photo pour la changer.</p>
+    <div class="prods" id="prods"></div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script>
+  const sb=window.supabase.createClient(window.SUPABASE_URL,window.SUPABASE_KEY);
+  const $=s=>document.querySelector(s);
+  const fmt=n=>(+n).toFixed(2).replace('.',',')+' €';
+  const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e};
+  function toast(t){const d=el('div','toast',t);document.body.appendChild(d);setTimeout(()=>d.remove(),2600)}
+  const todayIso=()=>new Date().toLocaleDateString('sv-SE',{timeZone:'Europe/Paris'});
+
+  // ---- connexion ----
+  async function boot(){
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session){ $('#loginView').hidden=false; $('#app').hidden=true; return; }
+    const {data:isAdmin}=await sb.rpc('is_admin');
+    if(!isAdmin){ await sb.auth.signOut(); showLoginMsg("Ce compte n'a pas accès à la gestion du magasin."); $('#loginView').hidden=false; return; }
+    $('#loginView').hidden=true; $('#app').hidden=false;
+    loadOrders(); loadProducts(); listen();
+  }
+  function showLoginMsg(t){const m=$('#loginMsg');m.hidden=false;m.textContent=t}
+  $('#loginForm').onsubmit=async e=>{
+    e.preventDefault(); const f=new FormData(e.target);
+    const {error}=await sb.auth.signInWithPassword({email:f.get('email'),password:f.get('password')});
+    if(error){ showLoginMsg('Email ou mot de passe incorrect.'); return; }
+    boot();
+  };
+  $('#logout').onclick=async()=>{await sb.auth.signOut();location.reload()};
+
+  // ---- onglets ----
+  document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('[data-tab]').forEach(x=>x.setAttribute('aria-selected',x===b));
+    $('#ordersView').hidden=b.dataset.tab!=='orders'; $('#productsView').hidden=b.dataset.tab!=='products';
+  });
+
+  // ---- commandes ----
+  let orders=[], filter='active';
+  const NEXT={'nouvelle':['en préparation','Commencer'],'en préparation':['prête','Marquer prête'],'prête':['retirée','Remise au client']};
+  document.querySelectorAll('#orderFilter button').forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll('#orderFilter button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderOrders()});
+  async function loadOrders(){
+    const {data,error}=await sb.from('orders').select('*').order('pickup_date').order('pickup_time').limit(300);
+    if(error){toast('Erreur de chargement des commandes');return}
+    orders=data; renderOrders();
+  }
+  function renderOrders(){
+    const t=todayIso();
+    const list=orders.filter(o=>filter==='all'?true:filter==='today'?o.pickup_date===t:['nouvelle','en préparation','prête'].includes(o.status));
+    const n=orders.filter(o=>o.status==='nouvelle').length; $('#newCount').textContent=n?'('+n+')':'';
+    const box=$('#orders'); box.innerHTML='';
+    if(!list.length){box.appendChild(el('p','empty','Aucune commande ici pour le moment.'));return}
+    list.forEach(o=>{
+      const c=el('article','card order'); c.dataset.s=o.status;
+      const top=el('div','top'); const left=el('div');
+      left.appendChild(el('div','ref','N° '+o.reference));
+      const d=new Date(o.pickup_date+'T12:00:00');
+      left.appendChild(el('div','meta','Retrait '+(o.pickup_date===t?"aujourd'hui":d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}))+' à '+o.pickup_time));
+      top.appendChild(left); top.appendChild(el('span','pill',o.status)); c.appendChild(top);
+      const who=el('div','meta'); who.append(o.customer_name+' · '); const tel=el('a',null,o.phone); tel.href='tel:'+o.phone.replace(/[^\d+]/g,''); who.appendChild(tel); c.appendChild(who);
+      const ul=el('ul'); (o.items||[]).forEach(i=>{const li=el('li');li.appendChild(el('span',null,i.qty+' × '+i.name+' ('+i.unit+')'));li.appendChild(el('span',null,fmt(i.price*i.qty)));ul.appendChild(li)});
+      const tl=el('li'); tl.appendChild(el('b',null,'Total')); tl.appendChild(el('b',null,fmt(o.total))); ul.appendChild(tl); c.appendChild(ul);
+      if(o.note) c.appendChild(el('p','meta','Remarque : '+o.note));
+      const acts=el('div','acts');
+      if(NEXT[o.status]){const b=el('button','btn',NEXT[o.status][1]);b.onclick=()=>setStatus(o,NEXT[o.status][0]);acts.appendChild(b)}
+      if(!['retirée','annulée'].includes(o.status)){const b=el('button','btn danger','Annuler');b.onclick=()=>{if(confirm('Annuler la commande '+o.reference+' ?'))setStatus(o,'annulée')};acts.appendChild(b)}
+      c.appendChild(acts); box.appendChild(c);
+    });
+  }
+  async function setStatus(o,s){
+    const {error}=await sb.from('orders').update({status:s}).eq('id',o.id);
+    if(error){toast("Le statut n'a pas pu être changé");return}
+    o.status=s; renderOrders(); toast('Commande '+o.reference+' : '+s);
+  }
+  function listen(){
+    sb.channel('orders').on('postgres_changes',{event:'*',schema:'public',table:'orders'},p=>{
+      if(p.eventType==='INSERT'){ orders.push(p.new); toast('Nouvelle commande N° '+p.new.reference); try{navigator.vibrate&&navigator.vibrate(300)}catch(e){} beep(); }
+      else if(p.eventType==='UPDATE'){ const i=orders.findIndex(o=>o.id===p.new.id); if(i>-1) orders[i]=p.new; }
+      orders.sort((a,b)=>(a.pickup_date+a.pickup_time).localeCompare(b.pickup_date+b.pickup_time)); renderOrders();
+    }).subscribe();
+  }
+  function beep(){try{const a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.frequency.value=880;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(.2,a.currentTime);o.start();o.stop(a.currentTime+.25)}catch(e){}}
+
+  // ---- produits ----
+  let prods=[];
+  async function loadProducts(){
+    const {data,error}=await sb.from('products').select('*').order('sort').order('name');
+    if(error){toast('Erreur de chargement des produits');return}
+    prods=data; renderProducts();
+  }
+  const imgSrc=u=>!u?null:/^https?:/.test(u)?u:'./'+u;
+  function renderProducts(){
+    const box=$('#prods'); box.innerHTML='';
+    prods.forEach(p=>{
+      const c=el('article','card prod'+(p.available?'':' off'));
+      const ph=el('label','ph'); ph.title='Changer la photo';
+      const src=imgSrc(p.image_url); if(src){const im=new Image();im.src=src;im.alt=p.name;ph.appendChild(im)} else ph.append('Ajouter photo');
+      const file=el('input'); file.type='file'; file.accept='image/*'; file.onchange=()=>upload(p,file.files[0]); ph.appendChild(file);
+      const right=el('div'); const fields=el('div','fields');
+      const field=(lab,key,type)=>{const l=el('label',null,lab);const i=el('input');i.value=p[key]??'';if(type)i.type=type;if(type==='number'){i.step='0.01';i.min='0';i.inputMode='decimal'}
+        i.onchange=()=>save(p,{[key]:type==='number'?Math.max(0,parseFloat(String(i.value).replace(',','.'))||0):i.value.trim()});l.appendChild(i);fields.appendChild(l)};
+      field('Nom','name'); field('Catégorie','category'); field('Unité','unit'); field('Prix (€)','price','number');
+      right.appendChild(fields);
+      const r2=el('div','row2');
+      const sw=el('label','switch'); const cb=el('input'); cb.type='checkbox'; cb.checked=p.available; cb.onchange=()=>{save(p,{available:cb.checked});c.classList.toggle('off',!cb.checked)}; sw.append(cb,'En vente'); r2.appendChild(sw);
+      const del=el('button','btn danger','Supprimer'); del.onclick=()=>remove(p); r2.appendChild(del);
+      right.appendChild(r2); c.append(ph,right); box.appendChild(c);
+    });
+  }
+  async function save(p,patch){
+    if(patch.name===''||patch.category===''||patch.unit===''){toast('Ce champ ne peut pas être vide');renderProducts();return}
+    const {error}=await sb.from('products').update({...patch,updated_at:new Date().toISOString()}).eq('id',p.id);
+    if(error){toast("Pas enregistré : "+error.message);return}
+    Object.assign(p,patch); toast('Enregistré');
+  }
+  async function upload(p,f){
+    if(!f) return; if(f.size>5e6){toast('Photo trop lourde (5 Mo max)');return}
+    const ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
+    const path=p.id+'-'+Date.now()+'.'+ext;
+    const {error}=await sb.storage.from('products').upload(path,f,{contentType:f.type,upsert:false});
+    if(error){toast("La photo n'a pas pu être envoyée");return}
+    const url=sb.storage.from('products').getPublicUrl(path).data.publicUrl;
+    await save(p,{image_url:url}); renderProducts();
+  }
+  async function remove(p){
+    if(!confirm('Supprimer « '+p.name+' » du catalogue ?')) return;
+    const {error}=await sb.from('products').delete().eq('id',p.id);
+    if(error){toast("Suppression impossible");return}
+    prods=prods.filter(x=>x!==p); renderProducts(); toast('Produit supprimé');
+  }
+  $('#addProd').onclick=async()=>{
+    const {data,error}=await sb.from('products').insert({name:'Nouveau produit',category:'Fruits',unit:'kg',price:0,available:false,sort:(prods.at(-1)?.sort||0)+1}).select().single();
+    if(error){toast("Ajout impossible");return}
+    prods.push(data); renderProducts(); toast('Produit ajouté (pas encore en vente)');
+    $('#prods').lastElementChild.querySelector('input').focus();
+  };
+
+  sb.auth.onAuthStateChange(e=>{if(e==='SIGNED_OUT'){$('#app').hidden=true;$('#loginView').hidden=false}});
+  boot();
+</script>
+</body>
+</html>

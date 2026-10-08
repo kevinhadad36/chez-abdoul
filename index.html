@@ -197,6 +197,10 @@
   .sum{display:flex;justify-content:space-between;align-items:baseline;padding-top:12px;border-top:1px dashed var(--line)}
   .sum b{font-size:24px;font-weight:500;font-variant-numeric:tabular-nums}
   .fine{font-size:12px;color:var(--muted)}
+  .done{background:var(--leaf-soft);border:2px solid var(--leaf);border-radius:16px;padding:20px;display:grid;gap:10px;font-size:15px}
+  .done .ref{font-size:32px;font-weight:600;color:var(--leaf-deep);letter-spacing:.04em}
+  .done.err{background:#fdecea;border-color:var(--tomato)}
+  .done .ghost{justify-self:start}
   @media (max-width:720px){ .cartbtn{left:12px;right:12px;bottom:72px} }
 
   /* INFOS */
@@ -280,7 +284,7 @@
     <div class="shop">
       <div class="cats" id="cats" role="tablist" aria-label="Catégories"></div>
       <div class="grid" id="grid"></div>
-      <p class="note up">Catalogue et prix d'exemple — à remplacer par les produits du magasin</p>
+      <p class="note up" id="demoNote">Catalogue et prix d'exemple — à remplacer par les produits du magasin</p>
     </div>
   </section>
 
@@ -349,8 +353,9 @@
       <label>Remarque (facultatif)<input name="note" placeholder="Mangues bien mûres, etc."></label>
       <div class="sum"><span class="up">Total estimé</span><b id="sumTotal">0,00 €</b></div>
       <button class="pill" type="submit">Envoyer ma commande</button>
-      <p class="fine">La commande s'ouvre dans WhatsApp, prête à envoyer au magasin. Paiement au retrait.</p>
+      <p class="fine">Le magasin reçoit votre commande et la prépare pour le créneau choisi. Paiement au retrait.</p>
     </form>
+    <div id="done" class="done" hidden role="status" aria-live="polite"></div>
   </aside>
 
   <section id="infos">
@@ -391,7 +396,7 @@
 
 <footer>
   <span class="up">© 2026 Fruits &amp; Légumes Chez Abdoul · Toulouse</span>
-  <span class="up">102 rue du Férétra · 07 51 36 05 12</span>
+  <span class="up">102 rue du Férétra · 07 51 36 05 12 · <a href="gestion.html">Espace magasin</a></span>
   <p class="credits">Photos produits : <a href="https://commons.wikimedia.org/wiki/File:Mangos_-_single_and_halved.jpg">Ivar Leidus</a> (CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:%E0%B4%95%E0%B5%88%E0%B4%A4%E0%B4%9A%E0%B5%8D%E0%B4%9A%E0%B4%95%E0%B5%8D%E0%B4%95.jpg">Suniltg at Malayalam Wikipedia</a> (CC BY 3.0), <a href="https://commons.wikimedia.org/wiki/File:Bunch_of_bananas_on_sale.jpg">Wilfredor</a> (CC0), <a href="https://commons.wikimedia.org/wiki/File:Bright_red_tomato_and_cross_section02.jpg">fir0002 flagstaffotos [at] gmail.com Canon 20D + Sigma 15</a> (GFDL 1.2), <a href="https://commons.wikimedia.org/wiki/File:Baby_Bell_pepper_Capsicum_annuum_3.jpg">W.Rebel</a> (CC BY-SA 3.0), <a href="https://commons.wikimedia.org/wiki/File:Mixed_onions.jpg">Colin</a> (CC BY-SA 3.0), <a href="https://commons.wikimedia.org/wiki/File:Plantain_01.jpg">Amuzujoe</a> (CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Yam_tuber.jpg">Kambai Akau</a> (CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Quiabo.jpg">ArionStar</a> (CC0), <a href="https://commons.wikimedia.org/wiki/File:Harvested_cassava_roots_06.jpg">Denis kasozi</a> (CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Egg_cartons_with_chicken_eggs_03.jpg">Krzysztof Golik</a> (CC BY-SA 4.0), via Wikimedia Commons.</p>
 </footer>
 
@@ -400,6 +405,8 @@
   <a class="ghost" href="#commander">Commander</a>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
 <script>
   document.documentElement.classList.add('js');
   const nav=document.getElementById('nav');
@@ -417,7 +424,7 @@
   if(!isOpen) st.classList.add('closed');
 
   // ---- click & collect ----
-  const PRODUCTS=[
+  let PRODUCTS=[
     {id:'mangue',cat:'Fruits',name:'Mangue',unit:'pièce',price:1.5},
     {id:'ananas',cat:'Fruits',name:'Ananas',unit:'pièce',price:2.5},
     {id:'banane',cat:'Fruits',name:'Bananes',unit:'kg',price:1.99},
@@ -430,12 +437,13 @@
     {id:'manioc',cat:'Exotique',name:'Manioc',unit:'kg',price:2.9},
     {id:'olives',cat:'Épicerie',name:'Olives au détail',unit:'250 g',price:2.5,img:'images/photo-5.jpg',pos:'15% 75%'},
     {id:'oeufs',cat:'Épicerie',name:'Œufs frais',unit:'boîte de 12',price:3.9},
-    {id:'pain',cat:'Épicerie',name:'Pain chaud',unit:'pièce',price:1.2}
-  ];
+    {id:'pain',cat:'Épicerie',name:'Pain chaud',unit:'pièce',price:1.2,img:null}
+  ].map(p=>({...p,img:p.img===undefined?'images/produit-'+p.id+'.jpg':p.img}));
+  let live=false, sb=null;
   const fmt=n=>n.toFixed(2).replace('.',',')+' €';
   let cart={}; try{cart=JSON.parse(localStorage.getItem('abdoul-cart'))||{}}catch(e){}
   const save=()=>{try{localStorage.setItem('abdoul-cart',JSON.stringify(cart))}catch(e){}};
-  const cats=['Tout',...new Set(PRODUCTS.map(p=>p.cat))];
+  let cats=['Tout',...new Set(PRODUCTS.map(p=>p.cat))];
   let cur='Tout';
   const catsEl=document.getElementById('cats'), grid=document.getElementById('grid');
   function renderCats(){
@@ -446,7 +454,7 @@
     grid.innerHTML='';
     PRODUCTS.filter(p=>cur==='Tout'||p.cat===cur).forEach(p=>{
       const q=cart[p.id]||0, el=document.createElement('article'); el.className='prod';
-      const src=p.img||(['pain'].includes(p.id)?null:'images/produit-'+p.id+'.jpg');
+      const src=p.img;
       el.innerHTML='<div class="pic"></div><span class="cat"></span><h3></h3><span class="price"></span><div class="act"></div>';
       const pic=el.querySelector('.pic');
       if(src){const im=new Image();im.src=src;im.alt=p.name;im.loading='lazy';if(p.pos)im.style.objectPosition=p.pos;pic.appendChild(im);}
@@ -465,7 +473,7 @@
     });
   }
   function setQ(id,q){ if(q<=0) delete cart[id]; else cart[id]=q; save(); renderGrid(); renderCart(); }
-  const total=()=>Object.entries(cart).reduce((s,[id,q])=>s+PRODUCTS.find(p=>p.id===id).price*q,0);
+  const total=()=>Object.entries(cart).reduce((s,[id,q])=>{const p=PRODUCTS.find(p=>p.id===id);return p?s+p.price*q:s},0);
   const count=()=>Object.values(cart).reduce((s,q)=>s+q,0);
   const cartEl=document.getElementById('cart'), cartBtn=document.getElementById('cartBtn');
   function renderCart(){
@@ -487,7 +495,9 @@
   for(let i=0;i<7;i++){const dt=new Date(now);dt.setDate(now.getDate()+i);
     const o=document.createElement('option'); o.value=i;
     o.textContent=(i===0?"Aujourd'hui":i===1?'Demain':DN[dt.getDay()].replace(/^./,c=>c.toUpperCase()))+' '+dt.getDate()+'/'+(dt.getMonth()+1);
-    o.dataset.label=o.textContent; o.dataset.dow=dt.getDay(); daySel.appendChild(o);}
+    o.dataset.label=o.textContent; o.dataset.dow=dt.getDay();
+    o.dataset.iso=dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');
+    daySel.appendChild(o);}
   function fillSlots(){
     slotSel.innerHTML=''; const o=daySel.selectedOptions[0], dow=+o.dataset.dow, end=dow===0?19*60+30:20*60+30;
     const start=daySel.value==='0'?Math.max(9*60+30,Math.ceil((m+60)/30)*30):9*60+30;
@@ -497,15 +507,45 @@
   daySel.onchange=fillSlots; fillSlots();
   if(!slotSel.options[0].value && daySel.options.length>1){daySel.value='1';fillSlots();}
 
-  document.getElementById('checkout').onsubmit=e=>{
-    e.preventDefault(); const f=new FormData(e.target);
-    const lines=Object.entries(cart).map(([id,q])=>{const p=PRODUCTS.find(x=>x.id===id);return '• '+q+' × '+p.name+' ('+p.unit+')'}).join('\n');
-    const msg='Bonjour Chez Abdoul, nouvelle commande click & collect :\n\n'+lines+'\n\nTotal estimé : '+fmt(total())+
-      '\nRetrait : '+daySel.selectedOptions[0].dataset.label+' à '+f.get('slot')+
-      '\nNom : '+f.get('name')+'\nTél : '+f.get('phone')+(f.get('note')?'\nRemarque : '+f.get('note'):'');
-    window.open('https://wa.me/33751360512?text='+encodeURIComponent(msg),'_blank','noopener');
+  const form=document.getElementById('checkout');
+  form.onsubmit=async e=>{
+    e.preventDefault(); const f=new FormData(form);
+    const btn=form.querySelector('button[type=submit]');
+    const day=daySel.selectedOptions[0];
+    const lines=Object.entries(cart).map(([id,q])=>{const p=PRODUCTS.find(x=>x.id===id);return p?'• '+q+' × '+p.name+' ('+p.unit+')':''}).filter(Boolean).join('\n');
+    const waMsg=ref=>'Bonjour Chez Abdoul, '+(ref?'commande n° '+ref+' passée sur le site':'nouvelle commande click & collect')+' :\n\n'+lines+'\n\nTotal estimé : '+fmt(total())+
+      '\nRetrait : '+day.dataset.label+' à '+f.get('slot')+'\nNom : '+f.get('name')+'\nTél : '+f.get('phone')+(f.get('note')?'\nRemarque : '+f.get('note'):'');
+    if(!live){ window.open('https://wa.me/33751360512?text='+encodeURIComponent(waMsg()),'_blank','noopener'); return; }
+    btn.disabled=true; btn.textContent='Envoi en cours…';
+    const {data:ref,error}=await sb.rpc('place_order',{
+      p_name:f.get('name'),p_phone:f.get('phone'),p_pickup_date:day.dataset.iso,p_pickup_time:f.get('slot'),
+      p_note:f.get('note')||'',p_items:Object.entries(cart).map(([id,qty])=>({id,qty}))});
+    btn.disabled=false; btn.textContent='Envoyer ma commande';
+    const box=document.getElementById('done');
+    if(error){ box.hidden=false; box.className='done err'; box.textContent='La commande n\'a pas pu être enregistrée ('+error.message+'). Vous pouvez l\'envoyer par WhatsApp ou appeler le 07 51 36 05 12.'; return; }
+    const summary=waMsg(ref);
+    cart={}; save(); renderGrid(); renderCart();
+    document.getElementById('empty').hidden=true;
+    box.hidden=false; box.className='done';
+    box.innerHTML='<p class="up">Commande reçue</p><p class="ref"></p><p></p><a class="ghost" target="_blank" rel="noopener">Prévenir aussi par WhatsApp</a>';
+    box.querySelector('.ref').textContent='N° '+ref;
+    box.querySelectorAll('p')[2].textContent='Retrait '+day.dataset.label+' à '+f.get('slot')+'. Paiement au magasin. Gardez ce numéro.';
+    box.querySelector('a').href='https://wa.me/33751360512?text='+encodeURIComponent(summary);
   };
   renderCats(); renderGrid(); renderCart();
+
+  // catalogue en direct depuis la base du magasin
+  (async()=>{
+    if(!window.supabase||!window.SUPABASE_URL) return;
+    sb=window.supabase.createClient(window.SUPABASE_URL,window.SUPABASE_KEY);
+    const {data,error}=await sb.from('products').select('id,name,category,unit,price,image_url').order('sort').order('name');
+    if(error||!data||!data.length) return;
+    PRODUCTS=data.map(p=>({id:p.id,cat:p.category,name:p.name,unit:p.unit,price:+p.price,img:p.image_url,pos:p.image_url==='images/photo-5.jpg'?'15% 75%':null}));
+    Object.keys(cart).forEach(id=>{if(!PRODUCTS.some(p=>p.id===id)) delete cart[id]}); save();
+    cats=['Tout',...new Set(PRODUCTS.map(p=>p.cat))]; if(!cats.includes(cur)) cur='Tout';
+    live=true; document.getElementById('demoNote').hidden=true;
+    renderCats(); renderGrid(); renderCart();
+  })();
 
   // apparition au scroll, à partir d'un état visible
   if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
