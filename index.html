@@ -162,6 +162,14 @@
   .cats button[aria-selected="true"]{border-color:var(--leaf-deep);background:var(--leaf);color:var(--ink)}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
   .prod{border:1px solid var(--line);border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:12px;background:var(--surface)}
+  .prod{padding:12px 12px 18px}
+  .prod > :not(.pic){margin-inline:8px}
+  .pic{aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:var(--leaf-soft)}
+  .pic img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+  .prod:hover .pic img{transform:scale(1.05)}
+  .pic.none{display:grid;place-items:center;background:var(--sun);font-weight:600;text-transform:uppercase;font-size:18px;color:var(--ink)}
+  .credits{flex-basis:100%;font-size:10px;line-height:1.5;color:var(--muted)}
+  .credits a{color:inherit}
   .prod .cat{font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:500}
   .prod h3{font-size:20px;font-weight:500;text-transform:uppercase;line-height:1.05}
   .prod .price{font-variant-numeric:tabular-nums;color:var(--ink-soft);font-size:15px}
@@ -255,6 +263,27 @@
 </div></div>
 
 <main>
+  <section id="commander">
+    <div class="order">
+      <div>
+        <p class="label up">Click &amp; collect</p>
+        <h2>Commandez,<br>on prépare,<br>vous passez</h2>
+        <p>Choisissez vos produits et votre créneau. Votre commande arrive directement au magasin, vous payez sur place au retrait.</p>
+      </div>
+      <ol class="steps">
+        <li>Ajoutez vos produits au panier</li>
+        <li>Choisissez le jour et l'heure de retrait</li>
+        <li>Récupérez et payez au magasin</li>
+      </ol>
+    </div>
+
+    <div class="shop">
+      <div class="cats" id="cats" role="tablist" aria-label="Catégories"></div>
+      <div class="grid" id="grid"></div>
+      <p class="note up">Catalogue et prix d'exemple — à remplacer par les produits du magasin</p>
+    </div>
+  </section>
+
   <section>
     <p class="label up">Le magasin</p>
     <p class="statement reveal">Le primeur du quartier Saint-Agne – Empalot. Des fruits et légumes <em>frais chaque jour</em>, les produits exotiques qu'on ne trouve pas ailleurs, et l'épicerie du quotidien. Ouvert tous les jours, même le dimanche.</p>
@@ -303,26 +332,6 @@
     </div>
   </section>
 
-  <section id="commander" style="padding-top:0">
-    <div class="order">
-      <div>
-        <p class="label up">Click &amp; collect</p>
-        <h2>Commandez,<br>on prépare,<br>vous passez</h2>
-        <p>Choisissez vos produits et votre créneau. Votre commande arrive directement au magasin, vous payez sur place au retrait.</p>
-      </div>
-      <ol class="steps">
-        <li>Ajoutez vos produits au panier</li>
-        <li>Choisissez le jour et l'heure de retrait</li>
-        <li>Récupérez et payez au magasin</li>
-      </ol>
-    </div>
-
-    <div class="shop">
-      <div class="cats" id="cats" role="tablist" aria-label="Catégories"></div>
-      <div class="grid" id="grid"></div>
-      <p class="note up">Catalogue et prix d'exemple — à remplacer par les produits du magasin</p>
-    </div>
-  </section>
 
   <button class="cartbtn up" id="cartBtn" aria-controls="cart" aria-expanded="false">Panier · <span id="cartCount">0</span> · <span id="cartTotal">0,00 €</span></button>
 
@@ -383,6 +392,7 @@
 <footer>
   <span class="up">© 2026 Fruits &amp; Légumes Chez Abdoul · Toulouse</span>
   <span class="up">102 rue du Férétra · 07 51 36 05 12</span>
+  <p class="credits">Photos produits : <a href="https://commons.wikimedia.org/wiki/File:Mangos_-_single_and_halved.jpg">Ivar Leidus</a> (CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:%E0%B4%95%E0%B5%88%E0%B4%A4%E0%B4%9A%E0%B5%8D%E0%B4%9A%E0%B4%95%E0%B5%8D%E0%B4%95.jpg">Suniltg at Malayalam Wikipedia</a> (CC BY 3.0), <a href="https://commons.wikimedia.org/wiki/File:Bunch_of_bananas_on_sale.jpg">Wilfredor</a> (CC0), <a href="https://commons.wikimedia.org/wiki/File:Bright_red_tomato_and_cross_section02.jpg">fir0002 flagstaffotos [at] gmail.com Canon 20D + Sigma 15</a> (GFDL 1.2), <a href="https://commons.wikimedia.org/wiki/File:Baby_Bell_pepper_Capsicum_annuum_3.jpg">W.Rebel</a> (CC BY-SA 3.0), <a href="https://commons.wikimedia.org/wiki/File:Mixed_onions.jpg">Colin</a> (CC BY-SA 3.0), <a href="https://commons.wikimedia.org/wiki/File:Plantain_01.jpg">Amuzujoe</a> (CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Yam_tuber.jpg">Kambai Akau</a> (CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Quiabo.jpg">ArionStar</a> (CC0), <a href="https://commons.wikimedia.org/wiki/File:Harvested_cassava_roots_06.jpg">Denis kasozi</a> (CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Egg_cartons_with_chicken_eggs_03.jpg">Krzysztof Golik</a> (CC BY-SA 4.0), via Wikimedia Commons.</p>
 </footer>
 
 <div class="mbar">
@@ -418,7 +428,7 @@
     {id:'igname',cat:'Exotique',name:'Igname',unit:'kg',price:3.5},
     {id:'gombo',cat:'Exotique',name:'Gombo',unit:'barquette',price:2.8},
     {id:'manioc',cat:'Exotique',name:'Manioc',unit:'kg',price:2.9},
-    {id:'olives',cat:'Épicerie',name:'Olives au détail',unit:'250 g',price:2.5},
+    {id:'olives',cat:'Épicerie',name:'Olives au détail',unit:'250 g',price:2.5,img:'images/photo-5.jpg',pos:'15% 75%'},
     {id:'oeufs',cat:'Épicerie',name:'Œufs frais',unit:'boîte de 12',price:3.9},
     {id:'pain',cat:'Épicerie',name:'Pain chaud',unit:'pièce',price:1.2}
   ];
@@ -436,7 +446,11 @@
     grid.innerHTML='';
     PRODUCTS.filter(p=>cur==='Tout'||p.cat===cur).forEach(p=>{
       const q=cart[p.id]||0, el=document.createElement('article'); el.className='prod';
-      el.innerHTML='<span class="cat"></span><h3></h3><span class="price"></span><div class="act"></div>';
+      const src=p.img||(['pain'].includes(p.id)?null:'images/produit-'+p.id+'.jpg');
+      el.innerHTML='<div class="pic"></div><span class="cat"></span><h3></h3><span class="price"></span><div class="act"></div>';
+      const pic=el.querySelector('.pic');
+      if(src){const im=new Image();im.src=src;im.alt=p.name;im.loading='lazy';if(p.pos)im.style.objectPosition=p.pos;pic.appendChild(im);}
+      else{pic.classList.add('none');pic.textContent=p.name;}
       el.querySelector('.cat').textContent=p.cat; el.querySelector('h3').textContent=p.name;
       el.querySelector('.price').textContent=fmt(p.price)+' / '+p.unit;
       const act=el.querySelector('.act');
